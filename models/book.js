@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Book extends Model {
     /**
@@ -14,23 +12,47 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Book.init({
+    id:{
+      type:DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     title:{ 
       type:DataTypes.STRING,
-      allowNull: false
+      allowNull: false,// does not accept null as an option 
+      validate: {
+        notNull:{
+          msg:'"Title" is required'
+        },
+        notEmpty: {
+          msg: '"Title" is required'
+        }
+      }
     },
     author:{ 
       type:DataTypes.STRING,
-      allowNull: false
+      allowNull: false, 
+      validate: {
+        notNull:{
+          msg:'"Author" is required'
+        },
+        notEmpty: {
+          msg: '"Author" is required'
+        }
+      }
     },
     genre:{ 
-      type:DataTypes.STRING
+      type:DataTypes.STRING,
+      allowNull: true,
     },
     year:{
-     type:DataTypes.INTEGER
+     type:DataTypes.INTEGER,
+     allowNull: true,
     },
   }, {
-    sequelize,
     modelName: 'Book',
+    sequelize,
+    
   });
   return Book;
 };
