@@ -36,11 +36,11 @@ router.post('/books/new',asyncHandler(async(req,res)=>{
   let book; 
   try{
     book= await bookModel.create(req.body);
-    res.redirect('/books');
+    res.redirect('/books' + book.id);
   }catch(error){
     if(error.name === "SequelizeValidationError"){
       book  = await bookModel.build(req.body);
-      res.render('new-book', {book, error, title:'New Book'})
+      res.render('new-book', {book, errors:error.errors, title:'New Book'})
     }else{
       throw error;
     }
@@ -53,7 +53,7 @@ router.get('/books/:id',asyncHandler(async(req,res)=>{
   if (book){
     res.render('update-book',{book, title: book.title});
   }else{
-    res.render('page-not-found');
+   res.render('page-not-found');
   }
   
 }));

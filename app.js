@@ -27,6 +27,7 @@ app.use('/users', usersRouter);
 /* 404 error handler that directs page-not found template */
 app.use((req, res, next)=>{
   const err= new Error('Not Found');
+  console.log('404 error handler called')
   err.status=404;
   err.message ='Sorry, page not found!'
   res.render('page-not-found',{ err })
