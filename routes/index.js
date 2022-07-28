@@ -48,12 +48,12 @@ router.post('/books/new',asyncHandler(async(req,res)=>{
 }));
 
 /* Get book details. */
-router.get('/books/:id',asyncHandler(async(req,res)=>{
+router.get('/books/:id',asyncHandler(async(req,res,next)=>{
   const book = await bookModel.findByPk(req.params.id);
   if (book){
     res.render('update-book',{book, title: book.title});
   }else{
-   res.render('page-not-found');
+   next()
   }
   
 }));
